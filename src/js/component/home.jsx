@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 //create your first component
 const Home = () => {
-  const [tareas, setTareas] = useState([
-    "Make the bed",
-    "Eat",
-    "Walk the dog",
-  ]);
+  const [tareas, setTareas] = useState([]);
+
+  useEffect(()=> {
+    fetch("https://assets.breatheco.de/apis/fake/todos/user/pzeta")
+    .then((response) => response.json())
+    .then((data) => setTareas(data));
+  }, []);
+
   return (
     <div className="container">
       <h1> Todo List</h1>
@@ -25,7 +28,7 @@ const Home = () => {
       {tareas.map((value, index) => {
         return (
           <li key={index}>
-            {value}
+          {value.label}
             <i
               className="fas fa-times float-end my-1 mx-1"
               onClick={() =>
